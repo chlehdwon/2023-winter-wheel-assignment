@@ -72,14 +72,17 @@ REACT_APP_S3_URL=        # S3 버킷의 URL
 #### 서버 환경 변수
 ```dotenv
 SESSION_KEY=             # 세션 키
-SPARCSSSO_CLIENT_ID=     # SPARCS SSO 클라이언트 ID
-SPARCSSSO_CLIENT_KEY=    # SPARCS SSO 클라이언트 키
+SPARCSSSO_CLIENT_ID=     # SPARCS SSO 클라이언트 ID (선택)
+SPARCSSSO_CLIENT_KEY=    # SPARCS SSO 클라이언트 키 (선택)
 FRONT_URL=               # 클라이언트가 배포된 URL
 AWS_ACCESS_KEY_ID=       # AWS Access Key ID
 AWS_SECRET_ACCESS_KEY=   # AWS Secret Access Key
 AWS_S3_BUCKET_NAME=      # AWS S3 버킷 이름
 DB_PATH=                 # MongoDB URL
 ```
+
+`SPARCSSSO_CLIENT_ID`, `SPARCSSO_CLIENT_KEY`는 [SPARCS SSO Dev Center](https://sparcssso.kaist.ac.kr/dev/service/add/)에 SPARCS 계정으로 로그인하셔서 Dev Service Key를 발급받으시면 됩니다. 이때 `Main URL`은 배포하신 서비스의 URL, `Login Callback URL`은 `{백엔드 서버 URL}/auth/sparcssso/callback`을 입력해 주시면 됩니다. 
+
 
 자세한 내용은 [`sparcs-kaist/taxi-docker`](https://github.com/sparcs-kaist/taxi-docker) 레포지토리를 참고하세요.
 
@@ -129,6 +132,9 @@ CD 워크플로우는 크게 두 단계로 구성됩니다.
 > [`docker/build-push-action`](https://github.com/marketplace/actions/build-and-push-docker-images)를 사용해서
 > 워크플로우를 구성해 보세요. [Github 공식 docs](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions)
 > 를 참고하는 것도 도움이 될 수 있습니다. 
+
+> **HINT** 
+> `client` 이미지에 사용되는 `REACT_APP_???` 환경 변수들은 빌드 시에 정적으로 주입되는 환경 변수들이므로 빌드 환경에서 정의되어 있어야 합니다.
 
 ### 새로 빌드된 이미지 기반으로 EC2의 컨테이너 재시작
 
