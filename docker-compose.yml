@@ -2,6 +2,36 @@
 # For instructions, see https://github.com/SnowSuno/wheel-assignment-solution#2-docker-composeyml-%EC%9E%91%EC%84%B1
 version: "3"
 services:
+  client:
+    container_name: taxi-front
+    restart: always
+    image: taxi-front:0.2
+    ports:
+      - 3000:80
+    environment:
+      - REACT_APP_BACK_URL=${REACT_APP_BACK_URL}
+      - REACT_APP_S3_URL=${REACT_APP_S3_URL}
+
+  server:
+    container_name: taxi-back
+    restart: always
+    image: taxi-back:0.2
+    ports:
+      - 8080:80
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    environment:
+      - SESSION_KEY=${SESSION_KEY}
+      - SPARCSSSO_CLIENT_ID=${SPARCSSSO_CLIENT_ID}
+      - SPARCSSSO_CLIENT_KEY=${SPARCSSSO_CLIENT_KEY}
+      - FRONT_URL=${FRONT_URL}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+      - DB_PATH=${DB_PATH}
+
   mongodb:
     container_name: taxi-mongo
     image: mongo:5.0.8
@@ -11,5 +41,15 @@ services:
     volumes:
       - taxi-mongo-db:/data/db:rw
 
+  # nginx:
+  #   container_name: taxi-nginx
+  #   image: nginx:latest
+  #   restart: always
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   environment:
+  #     - TZ=Asia/Seoul
+
 volumes:
   taxi-mongo-db:
+    external: true
