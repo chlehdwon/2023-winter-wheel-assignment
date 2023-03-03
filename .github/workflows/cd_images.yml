@@ -10,7 +10,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build images:
+  build_images:
     name: Build images and push to image registry
     runs-on: ubuntu-latest
     permissions:
