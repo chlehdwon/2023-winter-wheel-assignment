@@ -6,6 +6,8 @@ name: cd_images
 on:
   release:
     types: [created]
+  push:
+    branches: ["main"]
 
 jobs:
   build images:
@@ -29,7 +31,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrrets.GHCR_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build and push taxi-back
         uses: docker/build-push-action@v4
