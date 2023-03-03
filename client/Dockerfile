@@ -7,10 +7,11 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN npm install && \
+    npm install react-inject-env@2.1.0 --save && \
     npm install serve -g
 
 RUN npm run build
 
 EXPOSE 80
 
-CMD ["sh", "-c", "serve -s build -l 80"]
+CMD ["sh", "-c", "npx react-inject-env set && serve -s build -l 80"]
