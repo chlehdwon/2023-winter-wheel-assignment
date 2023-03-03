@@ -6,8 +6,6 @@ name: cd_images
 on:
   release:
     types: [created]
-  push:
-    branches: ["main"]
 
 jobs:
   build_images:
