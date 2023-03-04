@@ -8,19 +8,19 @@
 # Requisites
 이 과제에서는 다음과 같은 기능들을 구현하게 됩니다.
 
-- [ ] **[`client`](./client)와 [`server`](./server)의 `Dockerfile`을 각각 작성**
+- [x] **[`client`](./client)와 [`server`](./server)의 `Dockerfile`을 각각 작성**
     - **6** Virtualization & docker
-- [ ] **[`client`](./client)와 [`server`](./server), 
+- [x] **[`client`](./client)와 [`server`](./server), 
 데이터베이스와 `nginx` 리버스 프록시로 구성된 `docker-compose.yml` 작성**
     - **6** Virtualization & Docker
     - **9** Advanced Database
     - **12** Nginx
-- [ ] **AWS의 `EC2`와 `S3`을 이용하여 서비스를 배포할 수 있는 환경 구성**
+- [x] **AWS의 `EC2`와 `S3`을 이용하여 서비스를 배포할 수 있는 환경 구성**
     - **2** AWS
     - **3** Linux
     - **5** File System & Physical Disk
     - **10** Network & DNS
-- [ ] **이미지를 빌드하여 이미지 레지스트리에 푸시 / 서버에서 배포하는 CD 파이프라인 구축**
+- [x] **이미지를 빌드하여 이미지 레지스트리에 푸시 / 서버에서 배포하는 CD 파이프라인 구축**
     - **11** CI/CD
 - [ ] (optional) **`EC2`에 배포된 서비스를 `HTTPS`로 접속할 수 있도록 `ssl` 인증서 발급**
     - **7** Security
