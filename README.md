@@ -41,14 +41,14 @@
 각각의 `Dockerfile` 안에서는 다음과 같은 작업을 수행해야 합니다. 
 
 [`./client/Dockerfile`](./client/Dockerfile)
-- [ ] `npm install`으로 디펜던시 설치
-- [ ] `npm run build` 명령어를 실행하여 빌드
-- [ ] 빌드된 파일을 static serve
+- [x] `npm install`으로 디펜던시 설치
+- [x] `npm run build` 명령어를 실행하여 빌드
+- [x] 빌드된 파일을 static serve
 
 
 [`./server/Dockerfile`](./server/Dockerfile)
-- [ ] `npm install`으로 디펜던시 설치
-- [ ] `npm run serve`으로 프로덕션 서버 실행
+- [x] `npm install`으로 디펜던시 설치
+- [x] `npm run serve`으로 프로덕션 서버 실행
 
 베이스 이미지로는 클라이언트와 서버 모두 [`node:16-alpine`](https://hub.docker.com/_/node) 이미지, 또는 이를 베이스로 하는 이미지를 사용하면 됩니다. 
 
