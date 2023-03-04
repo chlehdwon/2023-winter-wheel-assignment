@@ -33,7 +33,7 @@ const loginHtml = `
                 }
                 const submitHandler = () => {
                     const value = document.getElementById("input-id").value;
-                    if(value) post('/auth/try', { id: value });
+                    if(value) post('/try', { id: value });
                 }
                 const enterHandler = (e) => {
                     if (e.keyCode === 13) submitHandler();
