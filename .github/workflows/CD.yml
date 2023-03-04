@@ -49,58 +49,58 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/taxi-front:latest
             ghcr.io/${{ github.repository_owner }}/taxi-front:${{ env.RELEASE_VERSION }}
 
-    restart_EC2:
-      name: Pull latest images and restart EC2
-      runs-on: ubuntu-latest
-      needs: [build_images]
-      steps:
-        - name: Get Github action IP
-          id: ip
-          uses: haythem/public-ip@v1.2
+  restart_EC2:
+    name: Pull latest images and restart EC2
+    runs-on: ubuntu-latest
+    needs: [build_images]
+    steps:
+      - name: Get Github action IP
+        id: ip
+        uses: haythem/public-ip@v1.2
 
-        - name: Setting environment variables
-          run: echo "AWS_DEFAULT_REGION=ap-northeast-2" >> $GITHUB_ENV
+      - name: Setting environment variables
+        run: echo "AWS_DEFAULT_REGION=ap-northeast-2" >> $GITHUB_ENV
 
-        - name: configure aws credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-        - name: Add Github Actions IP to Security group
-          run: |
-            aws ec2 authorize-security-group-ingress \
-              --group-id sg-09fd40c1ea4b23ee1 \
-              --protocol tcp \
-              --port 22 \
-              --cidr ${{ steps.ip.outputs.ipv4 }}/32
+      - name: Add Github Actions IP to Security group
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id sg-09fd40c1ea4b23ee1 \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
-        - name: Configure SSH
-          run: |
-            mkdir -p ~/.ssh/
-            echo "$SSH_KEY" > ~/.ssh/staging.key
-            chmod 600 ~/.ssh/staging.key
-            cat >>~/.ssh/config <<END
-            HOST staging
-              HostName $SSH_HOST
-              User $SSH_USER
-              IdentityFile ~/.ssh/staging.key
-              StrictHostKeyChecking no
-            END
-          env:
-            SSH_HOST: ec2-3-34-43-80.ap-northeast-2.compute.amazonaws.com
-            SSH_USER: ubuntu
-            SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          HOST staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_HOST: ec2-3-34-43-80.ap-northeast-2.compute.amazonaws.com
+          SSH_USER: ubuntu
+          SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
 
-        - name: Restart with latest images
-          run: ssh staging 'cd /home/ubuntu/2023-winter-wheel-assignment && docker compose up -d'
+      - name: Restart with latest images
+        run: ssh staging 'cd /home/ubuntu/2023-winter-wheel-assignment && docker compose up -d'
 
-        - name: Remove Github Actions IP from security group
-          run: |
-            aws ec2 revoke-security-group-ingress  \
-              --group-id sg-09fd40c1ea4b23ee1 \
-              --protocol tcp \
-              --port 22 \
-              --cidr ${{ steps.ip.outputs.ipv4 }}/32
-          if: always()
+      - name: Remove Github Actions IP from security group
+        run: |
+          aws ec2 revoke-security-group-ingress  \
+            --group-id sg-09fd40c1ea4b23ee1 \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
+        if: always()
