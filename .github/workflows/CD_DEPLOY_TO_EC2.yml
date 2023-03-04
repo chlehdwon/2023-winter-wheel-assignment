@@ -43,7 +43,7 @@ jobs:
           HOST staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentifyFile ~/.ssh/staging.key
+            IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
         env:
