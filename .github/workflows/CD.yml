@@ -94,7 +94,7 @@ jobs:
           SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
 
       - name: Restart with latest images
-        run: ssh staging 'cd /home/ubuntu/2023-winter-wheel-assignment && docker compose up -d'
+        run: ssh staging 'cd /home/ubuntu/2023-winter-wheel-assignment && docker compose down && docker rmi ghcr.io/chlehdwon/taxi-front ghcr.io/chlehdwon/taxi-back && docker compose up -d'
 
       - name: Remove Github Actions IP from security group
         run: |
