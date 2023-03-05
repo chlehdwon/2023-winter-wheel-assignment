@@ -10,4 +10,6 @@ RUN npm install
 
 EXPOSE 80
 
+LABEL org.opencontainers.image.source https://github.com/chlehdwon/2023-winter-wheel-assignment
+
 CMD ["npm", "run", "serve"]

@@ -14,4 +14,6 @@ RUN npm run build
 
 EXPOSE 80
 
+LABEL org.opencontainers.image.source https://github.com/chlehdwon/2023-winter-wheel-assignment
+
 CMD ["sh", "-c", "npx react-inject-env set && serve -s build -l 80"]
