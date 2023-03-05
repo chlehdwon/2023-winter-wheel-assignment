@@ -39,6 +39,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/2023-winter-wheel-assignment/taxi-back:latest
             ghcr.io/${{ github.repository_owner }}/2023-winter-wheel-assignment/taxi-back:${{ env.RELEASE_VERSION }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/2023-winter-wheel-assignment
 
       - name: Build and push taxi-front
         uses: docker/build-push-action@v4
@@ -48,6 +50,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/2023-winter-wheel-assignment/taxi-front:latest
             ghcr.io/${{ github.repository_owner }}/2023-winter-wheel-assignment/taxi-front:${{ env.RELEASE_VERSION }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/2023-winter-wheel-assignment
 
   restart_EC2:
     name: Pull latest images and restart EC2
